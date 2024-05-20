@@ -1,10 +1,10 @@
 # PyCRTBP
-## Orbits and tootls for the CRTBP
+## CRTBP Orbits and Utilities
 
 `PyCRTBP` is changing rapidly.  Here you will find a (non-exhaustive)
 list of the features introduced in each version family of the package.
 
-## ¿Qué hay de nuevo?
+## What's new?
 
 - **Versiones 0.1.x**:
 
