@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class _Particle():
 
     def __init__(self, r, v, name):

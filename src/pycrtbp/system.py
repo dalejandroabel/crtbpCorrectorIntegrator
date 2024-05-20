@@ -1,8 +1,31 @@
 from scipy.integrate import solve_ivp
-from particles import _Particle
-from example_systems import SS
+from pycrtbp.particles import _Particle
 import numpy as np
 
+SolarSystem = {'Mercury': 1.66012e-07,
+      'Venus': 2.44784e-06,
+      'Moon': 0.0121437,
+      'Earth': 3.04043e-06,
+      'Mars': 3.22717e-07,
+      'Io': 4.70422e-05,
+      'Europa': 2.52801e-05,
+      'Ganymede': 7.80432e-05,
+      'Callisto': 5.66663e-05,
+      'Jupiter': 0.000953886,
+      'Enceladus': 1.90115e-07,
+      'Tethys': 1.08647e-06,
+      'Dione': 1.9276e-06,
+      'Rhea': 4.05844e-06,
+      'Titan': 0.000236639,
+      'Iapetus': 3.17714e-06,
+      'Saturn': 0.000285805,
+      'Ariel': 1.44051e-05,
+      'Umbriel': 1.46864e-05,
+      'Titania': 3.91676e-05,
+      'Oberon': 3.54362e-05,
+      'Uranus': 4.36607e-05,
+      'Triton': 0.000208819,
+      'Neptune': 5.15114e-05}
 
 class System():
 
@@ -35,8 +58,8 @@ class System():
     def mu(self, mu):
         if type(mu) not in (float, int, np.number):
             if type(mu) == str:
-                if mu in SS.keys():
-                    self._mu = SS[mu]
+                if mu in SolarSystem.keys():
+                    self._mu = SolarSystem[mu]
                     return
             raise Exception("parameter mu must be a number")
         self._mu = mu
@@ -282,9 +305,9 @@ class System():
 
         return np.concatenate([dSTMdt, dydt])
 
-    def getSTM(self, time, r=None, v=None, p=None, from_current=False, flag=None, **kwargs):
+    def getSTM(self, time=None , r=None, v=None, p=None, from_current=False, flag=None, **kwargs):
 
-        if p:
+        if p is not None:
             if from_current:
                 x, y, z = self.particles[p].r
                 vx, vy, vz = self.particles[p].v
@@ -293,7 +316,7 @@ class System():
                 vx, vy, vz = self.particles[p].v0
 
         else:
-            if (not r) or (not v):
+            if (r is None) or (v is None):
                 raise ValueError("Missing vector")
             self._HandleVectors(r, v)
             x, y, z = r
@@ -307,7 +330,7 @@ class System():
         default.update(kwargs)
         t_eval = np.linspace(0, time, default['n'])
 
-        solution = solve_ivp(self.STMPropagator, y0=initialstate,
+        solution = solve_ivp(self._STMPropagator, y0=initialstate,
                              t_span=[0, time], t_eval=t_eval, events=(flag), **default)
         Y = solution.y[36:, :]
         STM = solution.y[:36, :].reshape((6, 6, solution.t.shape[0]))
@@ -329,7 +352,7 @@ class System():
 
     def diffcorrector(self, time=None, r=None, v=None, p=None, from_current=False):
 
-        if p:
+        if p is not None:
             if not time:
                 if self.particles[p].period == None:
                     raise ValueError(
@@ -346,7 +369,7 @@ class System():
             if not time:
                 raise ValueError(
                     "If a particle is not selected, a time (estimated period) should be pass")
-            if (not r) or (not v):
+            if (r is None) or (v is None):
                 raise ValueError("Missing vector")
             self._HandleVectors(r, v)
             x, y, z = r
@@ -355,11 +378,11 @@ class System():
         counter = 0
         r = np.array([x, y, z])
         v = np.array([vx, vy, vz])
-        Xmid, STM, Halftime = self.STM(time=time,
-                                       r=r, v=v, flag=self.crossingFlag)
+        Xmid, STM, Halftime = self.getSTM(time=time,
+                                       r=r, v=v, flag=self._crossingFlag)
         while (abs(Xmid[1]) > 1e-10 or abs(Xmid[3]) > 1e-10) and counter < 10:
-            Xmid, STM, Halftime = self.STM(
-                r=r, v=v, flag=self.crossingFlag)
+            Xmid, STM, Halftime = self.getSTM(time=time,
+                r=r, v=v, flag=self._crossingFlag)
             ax = self._EoM(Halftime, Xmid)[3]
             deltavy = -Xmid[3]/(STM[3, 4]-ax*STM[1, 4]/Xmid[4])
             v[1] += deltavy
@@ -373,11 +396,11 @@ class System():
         if not corrected:
             raise Warning("Orbit not corrected")
 
-        Xmid, STM, Halftime = self.STM(time=time,
-                                       r=r, v=v, flag=self.crossingFlag)
+        Xmid, STM, Halftime = self.getSTM(time=time,
+                                       r=r, v=v, flag=self._crossingFlag)
         while (abs(Xmid[1]) > 1e-10 or abs(Xmid[3]) > 1e-10) and counter < 10:
-            Xmid, STM, Halftime = self.STM(
-                r=r, v=v, flag=self.crossingFlag)
+            Xmid, STM, Halftime = self.getSTM(
+                r=r, v=v, flag=self._crossingFlag)
             ax = self._EoM(Halftime, Xmid)[3]
             deltavy = -Xmid[3]/(STM[3, 4]-ax*STM[1, 4]/Xmid[4])
             v[1] += deltavy
