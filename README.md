@@ -129,7 +129,7 @@ fig.show()
 
 For a detailed list of the newest features introduced in the latest
 releases pleas check [What's
-new](https://github.com/seap-udea/crtbpCorrectorIntegrator/raw/main/WHATSNEW.md).
+new](https://github.com/seap-udea/crtbpCorrectorIntegrator/blob/main/WHATSNEW.md).
 
 ------------
 

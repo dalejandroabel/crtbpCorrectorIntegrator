@@ -8,4 +8,5 @@ list of the features introduced in each version family of the package.
 
 - **Versiones 0.1.x**:
 
+  - Problems with System class has been solved.
   - First public versions of the package.
