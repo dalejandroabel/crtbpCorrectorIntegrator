@@ -45,6 +45,86 @@ Import package:
 import pycrtbp as py3
 ```
 
+Create a system:
+
+```python
+sys = p3.System(mu=0.3)
+```
+
+Add a particle:
+
+```python
+sys.add(r=[1,0,0],v=[0,0.5,0])
+```
+
+Propagate solution:
+
+```python
+solution,ts = sys.propagate(p=0,time=10,N=1000)
+```
+
+You may plot the trajectory:
+
+```python
+plt.plot(solucion[:,0],solucion[:,1])
+plt.axis('equal')
+```
+
+Or calculate quantities of interest:
+
+- Jacobi constant:
+  ```python
+  sys.getJacobiConstant(p=0)
+  ```
+
+- Position of the Lagrange equilibrium points:
+  ```python
+  sys.getLagrangePoints()
+  ```
+
+- Value of the state transition matrix:
+  ```python
+  STM, ts = sys.getSTM(p=0,time=0.5)
+  ```
+
+The following code plot a Lyapunov periodic orbit around the L1 point in the Earth-Moon system:
+
+```python
+import plotly.graph_objects as go
+
+# Data taken from https://ssd.jpl.nasa.gov/tools/periodic_orbits.html
+sys = p3.System(mu=1.215058560962404E-2)
+sys.add(r=[4.3840151982551506E-1,8.1854815386736461E-23,-2.4989800229106000E-25],
+        v=[2.1780773271699781E-13,1.3613843962742438E+0,-8.2105956297402337E-25])
+sys.refsystem = 'barycenter'
+solucion,ts = sys.propagate(time=10,p=0,N=1000)
+
+fig = go.Figure(data=go.Scatter3d(
+    x=solucion[:, 0],
+    y=solucion[:, 1],
+    z=solucion[:, 2],
+    mode='lines',
+    line=dict(color='blue', width=2),
+))
+
+fig.add_trace(go.Scatter3d(
+    x=[-sys.mu, 1-sys.mu],
+    y=[0, 0],
+    z=[0, 0],
+    mode='markers',
+    marker=dict(color='red', size=[5, 1]),
+))
+
+rang = 1.5
+fig.update_layout(scene=dict(
+    xaxis=dict(title='X',range=[-rang,rang]),
+    yaxis=dict(title='Y',range=[-rang,rang]),
+    zaxis=dict(title='Z',range=[-rang,rang]),
+))
+
+fig.show()
+```
+
 ## What's new
 
 For a detailed list of the newest features introduced in the latest
