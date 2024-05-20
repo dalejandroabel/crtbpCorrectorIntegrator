@@ -1,16 +1,3 @@
-##################################################################
-#                                                                #
-# ██████  ██    ██ ███    ███  ██████ ███████ ██                 #
-# ██   ██  ██  ██  ████  ████ ██      ██      ██                 #
-# ██████    ████   ██ ████ ██ ██      █████   ██                 #
-# ██         ██    ██  ██  ██ ██      ██      ██                 #
-# ██         ██    ██      ██  ██████ ███████ ███████            #
-#                                                                #
-# Utilidades de Mecáncica Celeste                                #
-#                                                                #
-##################################################################
-# Licencia http://github.com/seap-udea/pymcel                    #
-##################################################################
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -20,14 +7,14 @@ setuptools.setup(
     # ######################################################################
     # BASIC DESCRIPTION
     # ######################################################################
-    name='pymcel',
-    author="Jorge I. Zuluaga",
-    author_email="jorge.zuluaga@udea.edu.co",
-    description="Utilidades de Mecánica Celeste",
+    name='pycrtbp',
+    author="Diego A. Acosta & Jorge I. Zuluaga",
+    author_email="diego.acostab@udea.edu.co",
+    description="CRTBP Integrator and Tools",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://pypi.org/project/pymcel",
-    keywords='astronomy astrodynamics',
+    url="https://pypi.org/project/pycrtbp",
+    keywords='astrodynamics',
     license='MIT',
 
     # ######################################################################
@@ -38,7 +25,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         ],
-    version='0.5.12',
+    version='0.0.1',
 
     # ######################################################################
     # FILES
@@ -62,8 +49,7 @@ setuptools.setup(
     # ######################################################################
     # DEPENDENCIES
     # ######################################################################
-    install_requires=['spiceypy','astroquery','pandas',
-	              'matplotlib','tqdm','pandas'],
+    install_requires=['scipy','pytest'],
 
     # ######################################################################
     # OPTIONS

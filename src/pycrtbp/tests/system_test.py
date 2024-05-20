@@ -1,4 +1,4 @@
-from system import System
+from pycrtbp.system import System
 import pytest
 import numpy as np
 
