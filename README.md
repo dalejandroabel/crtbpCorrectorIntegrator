@@ -12,15 +12,14 @@ The package `pycrtbp` allows you to integrate orbits in the CRTBP problem.
 
 For the science behind the model please refer to the following papers:
 
-> Acosta, D.A., Zuluaga, J.I. & Restrepo, R. (2024), **The
-  bright side of the light curve: a general photometric model for
-  non-transiting exorings**, in preparation.
+> Acosta, D.A., Zuluaga, J.I. & Restrepo, R. (2024), **A web interface
+  for a collection of CRTBP periodic orbits**, in preparation.
 
-<!--
+<!-- This is the format for including a reference:
 [Astronomy and Computing 40 (2022)
   100623](https://www.sciencedirect.com/science/article/pii/S2213133722000476),
   [arXiv:2207.08636](https://arxiv.org/abs/2207.08636).
-  -->
+-->
 
 ## Download and install
 
@@ -50,7 +49,7 @@ import pycrtbp as py3
 
 For a detailed list of the newest features introduced in the latest
 releases pleas check [What's
-new](https://github.com/seap-udea/pryngles-public/blob/master/WHATSNEW.md).
+new](https://github.com/seap-udea/crtbpCorrectorIntegrator/raw/main/WHATSNEW.md).
 
 ------------
 
