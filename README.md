@@ -125,6 +125,18 @@ fig.update_layout(scene=dict(
 fig.show()
 ```
 
+## Periodic orbit database
+
+The package can interact with the periodic orbit database by Acosta, Zuluaga and Restrepo. To do it you must install independently mysql:
+
+```
+pip3 install mysql-connector-python
+```
+
+and install the database following the instructions we will publish. 
+
+The present version of the package does not have yet this functionality but we include it in this README to let you know of a coming feature.
+
 ## What's new
 
 For a detailed list of the newest features introduced in the latest
